@@ -205,24 +205,7 @@ body {
     background: linear-gradient(180deg, rgba(250, 246, 238, 0.55), rgba(255, 255, 255, 0.96));
 }
 
-.suggestions-container {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 10px;
-    min-height: 18px;
-    margin-bottom: 14px;
-}
 
-.suggestion-chip {
-    border: 1px solid rgba(111, 143, 93, 0.16);
-    background: rgba(255, 255, 255, 0.9);
-    color: var(--primary-dark);
-    border-radius: 999px;
-    padding: 8px 14px;
-    font: inherit;
-    font-size: 0.88rem;
-    cursor: pointer;
-}
 
 .input-wrapper {
     display: grid;

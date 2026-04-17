@@ -1,7 +1,6 @@
 const messagesContainer = document.getElementById('messages-container');
 const chatViewport = document.getElementById('chat-viewport');
 const welcomeMessage = document.querySelector('.welcome-message');
-const suggestionsContainer = document.getElementById('suggestions-container');
 const userInput = document.getElementById('user-input');
 const sendBtn = document.getElementById('send-btn');
 const contextBtn = document.getElementById('pet-context-btn');
@@ -58,19 +57,7 @@ async function streamText(element, text) {
     return Promise.resolve();
 }
 
-function setSuggestions(suggestions) {
-    suggestionsContainer.innerHTML = '';
-    suggestions.forEach(text => {
-        const chip = document.createElement('button');
-        chip.className = 'suggestion-chip';
-        chip.innerText = text;
-        chip.onclick = () => {
-            userInput.value = text;
-            handleSend();
-        };
-        suggestionsContainer.appendChild(chip);
-    });
-}
+
 
 function updateStatus(status) {
     const statusText = document.querySelector('.status');
@@ -93,7 +80,6 @@ async function handleSend() {
     chatHistory.push({ role: 'user', content: text });
     localStorage.setItem('nanu_chat_history', JSON.stringify(chatHistory));
     userInput.value = '';
-    setSuggestions([]);
 
     const typingDiv = document.createElement('div');
     typingDiv.className = 'message nanu typing-indicator';
@@ -119,16 +105,13 @@ async function handleSend() {
             await addMessage(finalMessage, 'nanu', true);
             chatHistory.push({ role: 'nanu', content: finalMessage });
             localStorage.setItem('nanu_chat_history', JSON.stringify(chatHistory));
-            setSuggestions(Array.isArray(data.suggestions) ? data.suggestions : []);
         } else {
             throw new Error("Server Error");
         }
     } catch (err) {
         if (messagesContainer.contains(typingDiv)) messagesContainer.removeChild(typingDiv);
-        updateStatus('fallback');
         const fallback = simulateNanu(text);
         await addMessage(fallback.message, 'nanu', true);
-        setSuggestions(fallback.suggestions);
     }
 }
 
@@ -137,14 +120,12 @@ function simulateNanu(msg) {
 
     if (lower.includes('shivering') || lower.includes('seizure') || lower.includes('blood') || lower.includes('breathing') || lower.includes('poison')) {
         return {
-            message: "This sounds urgent for your pet. You should go to a vet immediately. If your pet may have swallowed something harmful or cannot breathe normally, please leave now. Can you get to an emergency vet right away?",
-            suggestions: ["Emergency vet", "Poison help", "Breathing trouble"]
+            message: "This sounds urgent for your pet. You should go to a vet immediately. If your pet may have swallowed something harmful or cannot breathe normally, please leave now. Can you get to an emergency vet right away?"
         };
     }
 
     return {
-        message: "I can see you're worried about your pet. That kind of change can feel unsettling. Keep them comfortable, offer water, and watch for any clear change in energy, appetite, or breathing. What changed first?",
-        suggestions: ["Eating less", "Low energy", "Breathing change"]
+        message: "I can see you're worried about your pet. That kind of change can feel unsettling. Keep them comfortable, offer water, and watch for any clear change in energy, appetite, or breathing. What changed first?"
     };
 }
 

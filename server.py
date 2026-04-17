@@ -50,10 +50,6 @@ Your response MUST:
 2. Validate (1 sentence)
 3. Give specific guidance (1–2 sentences)
 
-OPTIONAL:
-
-* Ask ONE new relevant question ONLY if needed
-
 MAX: 4 sentences
 
 ---
@@ -172,12 +168,10 @@ Every response MUST feel:
 OUTPUT RULES (CRITICAL):
 Return ONLY a valid JSON object in this exact shape:
 {
-  "message": "the response following all rules above",
-  "suggestions": ["short option 1", "short option 2", "short option 3"]
+  "message": "the response following all rules above"
 }
 
 The "message" must follow the response structure unless the safety rule applies.
-The "suggestions" must be short, relevant, specific, and should reflect the latest user message.
 Do not include any text outside the JSON object."""
 
 
